@@ -1,0 +1,76 @@
+name: Validate and build key bumpers
+
+on:
+  push:
+    paths:
+      - 'models/**'
+      - 'scripts/**'
+      - '.github/workflows/build-models.yml'
+  pull_request:
+    paths:
+      - 'models/**'
+      - 'scripts/**'
+      - '.github/workflows/build-models.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate SCAD and parameter files
+        run: python3 scripts/validate_project.py
+
+  build:
+    name: Generate STL artifacts
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install OpenSCAD
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openscad
+
+      - name: Install BOSL2 dependency
+        run: |
+          mkdir -p vendor
+          git clone --depth 1 https://github.com/BelfrySCAD/BOSL2.git vendor/BOSL2
+
+      - name: Generate STL files
+        env:
+          OPENSCADPATH: ${{ github.workspace }}/vendor
+        run: |
+          mkdir -p build/stl
+          openscad -o build/stl/geely_ex2_bumper_canivete_v02.stl models/openscad/geely_ex2_bumper_canivete_v02.scad
+          openscad -o build/stl/geely_ex2_bumper_bosl2_v01.stl models/openscad/geely_ex2_bumper_bosl2_v01.scad
+          openscad -o build/stl/byd_dolphin_bumper_canivete_v02.stl models/openscad/byd_dolphin_bumper_canivete_v02.scad
+          openscad -o build/stl/byd_yuan_pro_bumper_v01.stl models/openscad/byd_yuan_pro_bumper_v01.scad
+          openscad -o build/stl/byd_seal_bumper_v01.stl models/openscad/byd_seal_bumper_v01.scad
+
+      - name: Audit generated STL geometry
+        run: python3 scripts/audit_stl.py
+
+      - name: Upload STL artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: key-bumper-stl-${{ github.sha }}
+          path: build/stl/*.stl
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload parameters
+        uses: actions/upload-artifact@v4
+        with:
+          name: key-bumper-parameters-${{ github.sha }}
+          path: models/parameters/*.csv
+          if-no-files-found: error
+          retention-days: 14
