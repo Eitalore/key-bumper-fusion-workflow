@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ApplicationPackage SchemaVersion="1.0" Name="KeyBumperSync" AppVersion="0.1.0" ProductCode="{C9A0CE4B-2A3A-4A7B-9D3C-1C2A55B6A101}" UpgradeCode="{B7B8B4D4-9F88-4A8A-AE72-AB2CB725B102}">
+  <CompanyDetails Name="Key Bumper Fusion Workflow" Url="https://github.com/" Email="" />
+  <Components Description="Key Bumper Sync Fusion 360 add-in">
+    <RuntimeRequirements OS="Win64|Mac" Platform="Fusion" SeriesMin="R1" SeriesMax="R999" />
+    <ComponentEntry AppName="KeyBumperSync" ModuleName="./Contents/KeyBumperSync.py" AppDescription="Import bumper STL files and measured parameters into Fusion 360." LoadOnStartUp="True" />
+  </Components>
+</ApplicationPackage>
