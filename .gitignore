@@ -1,0 +1,18 @@
+# Generated STL and build output
+build/
+*.stl
+
+# Local/vendor dependencies
+vendor/
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Fusion local files
+*.f3d
+*.f3z
