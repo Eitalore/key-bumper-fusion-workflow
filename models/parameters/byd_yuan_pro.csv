@@ -1,0 +1,13 @@
+name,value,units,status,notes
+KEY_L,78.0,mm,provisional,Measure physical key length
+KEY_W,34.0,mm,provisional,Measure physical key width
+KEY_T,14.5,mm,provisional,Measure physical key thickness
+KEY_R,7.0,mm,provisional,Measure corner radius
+CLR_X,0.40,mm,starting-point,Adjust after fit test
+CLR_Y,0.25,mm,starting-point,Adjust after fit test
+CLR_Z,0.35,mm,starting-point,Adjust after fit test
+MECH_SLOT_SIDE,1,unitless,measure,Use 1 or -1 after identifying mechanism side
+MECH_SLOT_X,20.0,mm,provisional,Measure release mechanism location
+MECH_SLOT_L,20.0,mm,provisional,Adjust generic slot length after test
+MECH_SLOT_Z,7.0,mm,provisional,Measure vertical slot center
+MECH_SLOT_H,7.0,mm,provisional,Adjust generic slot height after test
